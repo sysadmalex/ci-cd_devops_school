@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: flaskapp
+    image: alex2srv/flaskapp:${TAG}
+    ports:
+    - '8000:8000'
+    restart: always
+    environment:
+      FLASK_APP: api.py
+      FLASK_ENVIRONMENT: development
+      DB_USERNAME: "devops"
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOSTNAME: students_db
+      DB_NAME: "student"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - students_api
+  db:
+    container_name: students_db
+    image: mysql:5.7
+    ports:
+    - '3306:3306'
+    restart: always
+    environment:
+      MYSQL_DATABASE: "student"
+      MYSQL_USER: "devops"
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 2s
+    volumes:
+      - student-db:/var/lib/mysql
+    networks:
+      - students_api
+
+volumes:
+  student-db:
+
+networks:
+  students_api:
+    name: students_api_network

@@ -1,0 +1,53 @@
+{
+    "service_name": "Student API",
+    "endpoints": [
+        {
+            "method": "GET",
+            "path": "/api/students",
+            "description": "Get all students",
+            "status_code": ["200 - succesfull request"]
+        },
+        {
+            "method": "GET",
+            "path": "/api/students/get/<id>",
+            "description": "Get student by id",
+            "status_code": ["200 - succesful request", "404 - id is not found"]
+        },
+        {
+            "method": "POST",
+            "path": "/api/students/add",
+            "description": "Create student",
+            "status_code": ["201 - succesfull creation", "400 - invalid request body"]
+        },
+        {
+            "method": "PUT",
+            "path": "/api/students/change/<int:id>",
+            "description": "Update student, all fields",
+            "status_code": ["200 - succesfull update", "400 - invalid request body", "404 - id is not found"]
+        },
+        {
+            "method": "PATCH",
+            "path": "/api/students/modify/<int:id>",
+            "description": "Update student, some fields",
+            "status_code": ["200 - succesfull update", "400 - invalid request body", "404 - id is not found"]
+        },
+        {
+            "method": "DELETE",
+            "path": "/api/students/delete/<int:id>",
+            "description": "Delete student",
+            "status_code": ["200 - succesful deletion", "404 - id is not found"]
+        },
+        {
+            "method": "GET",
+            "path": "/api/health-check/ok",
+            "description": "Healthcheck OK",
+            "status_code": ["200"]
+        },
+        {
+            "method": "GET",
+            "path": "/api/health-check/bad",
+            "description": "Healthcheck bad",
+            "status_code": ["500"]
+        }
+    ]
+}
